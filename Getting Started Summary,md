@@ -1,0 +1,317 @@
+# Getting Started - Quick Summary
+
+## 🎯 What You Have
+
+Your large file **p2-pitta_25sept.txt** (81.5 MB) is the web server log file for **Activity 1**.
+
+## 📦 What I've Provided
+
+### 1. Repository Structure & Configuration Files
+- `.gitignore` - Excludes large files from Git
+- `requirements.txt` - All Python dependencies
+- `README.md` - Complete project documentation
+
+### 2. Complete Starter Code
+- **Activity 1**: Full Python notebook with all 10 questions scaffolded
+- **Activity 2**: Complete ML pipeline with 2 feature approaches and 3 classifiers
+- **Utility Script**: Feature engineering helper functions
+
+### 3. Templates & Guides  
+- **Activity 3 Report Template**: 1500-word structured report format
+- **Attack Documentation**: Working notes template
+- **Setup Guide**: Complete installation and workflow instructions
+
+---
+
+## ⚡ Quick Start (30 minutes)
+
+### 1. Create Folder Structure (5 min)
+```bash
+mkdir UFCFFY-15-M-CSA-Portfolio
+cd UFCFFY-15-M-CSA-Portfolio
+
+# Copy all artifacts I provided into appropriate locations
+```
+
+### 2. Setup Python Environment (10 min)
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# OR
+venv\Scripts\activate     # Windows
+
+pip install -r requirements.txt
+```
+
+### 3. Add Your Data (5 min)
+```bash
+# Move your log file
+cp /path/to/p2-pitta_25sept.txt activity1-log-analysis/data/
+
+# Download DGA dataset from Blackboard
+# Place in activity2-dga-classification/data/
+```
+
+### 4. Test Setup (10 min)
+```bash
+# Start Jupyter
+jupyter notebook
+
+# Open Activity 1 notebook
+# Run first few cells to verify data loads
+```
+
+---
+
+## 📋 File Naming Convention
+
+### What to Submit to Blackboard:
+1. `[YOUR_STUDENT_ID]-TASK1.ipynb` (Activity 1)
+2. `[YOUR_STUDENT_ID]-TASK2.ipynb` (Activity 2)  
+3. `[YOUR_STUDENT_ID]-TASK3.pdf` (Activity 3)
+
+**Example:** If student ID is 12345678:
+- `12345678-TASK1.ipynb`
+- `12345678-TASK2.ipynb`
+- `12345678-TASK3.pdf`
+
+---
+
+## 🗂️ Recommended Folder Structure
+
+```
+UFCFFY-15-M-CSA-Portfolio/
+│
+├── .gitignore                          # Provided ✓
+├── README.md                           # Provided ✓
+├── requirements.txt                    # Provided ✓
+├── SETUP_GUIDE.md                      # Provided ✓
+│
+├── activity1-log-analysis/
+│   ├── data/
+│   │   └── p2-pitta_25sept.txt        # YOUR FILE (81.5 MB)
+│   ├── notebooks/
+│   │   └── STUDENTID-TASK1.ipynb      # Use provided starter code
+│   └── outputs/
+│       └── figures/
+│
+├── activity2-dga-classification/
+│   ├── data/
+│   │   └── dga-24000.csv              # Download from Blackboard
+│   ├── notebooks/
+│   │   └── STUDENTID-TASK2.ipynb      # Use provided starter code
+│   ├── src/
+│   │   └── feature_engineering.py     # Provided utility script
+│   └── outputs/
+│       └── figures/
+│
+└── activity3-siem-attacks/
+    ├── documentation/
+    │   ├── STUDENTID-TASK3.pdf        # Your final report (max 1500 words)
+    │   ├── attack_notes.md            # Use provided template
+    │   └── report_template.md         # Provided template
+    └── screenshots/
+        ├── infrastructure/
+        ├── attacks/
+        └── detection/
+```
+
+---
+
+## 🎓 Activity Summary
+
+### Activity 1: Web Server Log Analysis (20%)
+**Your Task:** Analyze p2-pitta_25sept.txt to find malicious activity
+- **Questions 1-9:** Guided Python/Pandas exercises (12 marks)
+- **Question 10:** Independent investigation (8 marks)
+
+**Deliverable:** Jupyter notebook with all cells executed
+
+**Key Focus:** 
+- Find suspicious IP addresses
+- Explain your reasoning with code and analysis
+
+---
+
+### Activity 2: DGA ML Classification (35%)
+**Your Task:** Build ML classifier for malware URL detection
+- **Feature Engineering:** 2 different approaches (10 marks)
+- **ML Models:** 3 classifiers - LogReg, RF, MLP (5 marks)
+- **Evaluation:** Confusion matrix + SHAP (5 marks)
+- **Experimental Design:** Iterative improvement (10 marks)
+- **Presentation:** Clear documentation (5 marks)
+
+**Deliverable:** Jupyter notebook with >90% accuracy
+
+**Key Focus:**
+- Compare feature engineering approaches
+- Explain which malware families are confused
+- Use SHAP for explainability
+
+---
+
+### Activity 3: SIEM Attack Simulation (45%)
+**Your Task:** Setup virtual infrastructure, perform attacks, detect via SIEM
+- **Infrastructure:** Setup and document (10 marks)
+- **Attack Execution:** Multiple sophisticated attacks (15 marks)
+- **Detection:** Identify attacks in SIEM (15 marks)
+- **Report:** Professional 1500-word report (5 marks)
+
+**Deliverable:** PDF report with screenshots
+
+**Key Focus:**
+- Go beyond basic examples for higher marks
+- Show evidence with screenshots
+- Explain detection methodology clearly
+
+---
+
+## 📅 Suggested Timeline (8 weeks)
+
+| Week | Activity 1 | Activity 2 | Activity 3 |
+|------|-----------|-----------|-----------|
+| 1-2 | Complete Q1-9 | Data exploration | Research infrastructure options |
+| 3 | Investigate Q10 | Feature eng v1 | Setup environment |
+| 4 | Polish & review | Feature eng v2 + models | Execute attacks |
+| 5 | - | Performance tuning | Detection analysis |
+| 6 | - | SHAP analysis | Collect screenshots |
+| 7 | Final review | Final review | Write report draft |
+| 8 | Execute all cells | Execute all cells | Final report polish |
+
+**Submission:** Week 8 - Thursday, 11th December 2025, 14:00
+
+---
+
+## ✅ Pre-Submission Checklist
+
+### Activity 1
+- [ ] All 10 questions completed
+- [ ] All code cells executed successfully
+- [ ] Outputs visible in notebook
+- [ ] Student ID updated
+- [ ] Q10: Suspicious IPs identified with clear reasoning
+- [ ] File named: `STUDENTID-TASK1.ipynb`
+
+### Activity 2
+- [ ] 2+ feature engineering approaches implemented
+- [ ] 3 classifiers trained and compared
+- [ ] Achieved >90% accuracy (target for excellence)
+- [ ] Confusion matrix included
+- [ ] SHAP analysis performed
+- [ ] Clear documentation throughout
+- [ ] All cells executed
+- [ ] Student ID updated
+- [ ] File named: `STUDENTID-TASK2.ipynb`
+
+### Activity 3
+- [ ] Infrastructure documented with screenshots
+- [ ] Multiple attacks performed
+- [ ] Attacks detected in SIEM
+- [ ] Screenshots organized and labeled
+- [ ] Report written (≤1500 words)
+- [ ] Word count stated on cover page
+- [ ] All figures referenced in text
+- [ ] References in UWE Harvard format
+- [ ] Professional presentation
+- [ ] File named: `STUDENTID-TASK3.pdf`
+
+---
+
+## 🆘 Common Issues
+
+### "My log file is too large for Pandas"
+```python
+# Solution 1: Read in chunks
+chunks = []
+for chunk in pd.read_csv(file, delim_whitespace=True, chunksize=10000):
+    chunks.append(chunk)
+data = pd.concat(chunks)
+
+# Solution 2: Use specific columns only
+data = pd.read_csv(file, delim_whitespace=True, 
+                   usecols=['c-ip', 'datetime', 'sc-status'])
+```
+
+### "Jupyter kernel keeps dying"
+- Increase available RAM
+- Process data in smaller batches
+- Use `n_jobs=1` in sklearn models
+- Close other applications
+
+### "Can't achieve 90% accuracy in Activity 2"
+- Try more advanced feature engineering
+- Tune model hyperparameters
+- Use cross-validation
+- Combine both feature approaches
+- Increase max_features in TfidfVectorizer
+
+### "Don't have access to VMs for Activity 3"
+- Use university lab computers (32GB RAM)
+- Book a lab room for extended time
+- Start early to avoid resource issues
+- Consider GoibhniUWE (simplest option)
+
+---
+
+## 💡 Tips for Excellence (70%+)
+
+### Activity 1
+- Demonstrate creative data exploration beyond basic questions
+- Use multiple visualization types
+- Provide detailed, well-reasoned explanations for Q10
+- Link findings to real attack patterns
+
+### Activity 2
+- Create sophisticated feature engineering
+- Test multiple hyperparameter configurations
+- Deep analysis of confusion matrix
+- Comprehensive SHAP interpretation
+- Compare against published benchmarks
+
+### Activity 3
+- Setup custom infrastructure (not just GoibhniUWE)
+- Perform attack chains (multi-stage attacks)
+- Create custom SIEM detection rules
+- Correlate multiple log sources
+- Link to MITRE ATT&CK framework
+- Professional report with clear narrative
+
+---
+
+## 📚 Key Resources
+
+### Documentation
+- [Pandas](https://pandas.pydata.org/docs/)
+- [Scikit-learn](https://scikit-learn.org/stable/)
+- [SHAP](https://shap.readthedocs.io/)
+- [NetworkX](https://networkx.org/documentation/)
+
+### Security
+- [MITRE ATT&CK](https://attack.mitre.org/)
+- [Splunk Docs](https://docs.splunk.com/)
+- [Atomic Red Team](https://atomicredteam.io/)
+
+### Academic
+- [UWE Harvard Referencing](https://www.uwe.ac.uk/study/study-support/study-skills/referencing)
+- [Academic Writing](https://www.uwe.ac.uk/study/study-support/study-skills/reading-and-writing)
+
+---
+
+## 📧 Support
+
+- **Module Q&A:** [Online Form](https://forms.office.com/e/yxFJZDraRG)
+- **Module Leader:** Phil.Legg@uwe.ac.uk
+- **Lab Sessions:** Attend for hands-on help
+
+---
+
+## 🚀 Next Steps
+
+1. **Today:** Create folder structure, setup Python environment
+2. **Tomorrow:** Start Activity 1, complete Q1-5
+3. **This Week:** Complete Activity 1 Q1-9
+4. **Next Week:** Begin Activity 2 exploration
+
+**Remember:** Start early, work consistently, ask questions when stuck!
+
+Good luck! 🎓✨
