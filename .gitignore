@@ -60,7 +60,7 @@ ENV/
 *.jpg
 *.jpeg
 *.pdf
-!STUDENTID-TASK3.pdf
+!US17502-TASK3.pdf
 
 # Temporary files
 *.tmp
