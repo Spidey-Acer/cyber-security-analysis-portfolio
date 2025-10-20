@@ -55,12 +55,14 @@ ENV/
 *.joblib
 *.model
 
-# Output files
+# Output files - Allow screenshots and report
 *.png
 *.jpg
 *.jpeg
 *.pdf
 !US17502-TASK3.pdf
+!activity3-siem-attacks/screenshots/**/*.png
+!activity3-siem-attacks/screenshots/**/*.jpg
 
 # Temporary files
 *.tmp

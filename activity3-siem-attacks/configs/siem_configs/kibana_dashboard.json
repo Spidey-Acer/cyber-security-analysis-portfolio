@@ -1,0 +1,295 @@
+{
+  "title": "US17502 - Security Operations Dashboard",
+  "description": "Activity 3 SIEM monitoring dashboard for attack detection",
+  "version": 1,
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\"query\":{\"language\":\"kuery\",\"query\":\"\"},\"filter\":[]}"
+  },
+  "panels": [
+    {
+      "id": "authentication-timeline",
+      "type": "visualization",
+      "title": "Authentication Events Timeline",
+      "gridData": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      },
+      "panelIndex": "1",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "histogram",
+            "grid": {
+              "categoryLines": false
+            },
+            "categoryAxes": [
+              {
+                "id": "CategoryAxis-1",
+                "type": "category",
+                "position": "bottom",
+                "show": true,
+                "title": {
+                  "text": "Time"
+                }
+              }
+            ],
+            "valueAxes": [
+              {
+                "id": "ValueAxis-1",
+                "name": "LeftAxis-1",
+                "type": "value",
+                "position": "left",
+                "show": true,
+                "title": {
+                  "text": "Count"
+                }
+              }
+            ],
+            "seriesParams": [
+              {
+                "show": true,
+                "type": "histogram",
+                "mode": "stacked",
+                "data": {
+                  "label": "Authentication Events",
+                  "id": "1"
+                },
+                "valueAxis": "ValueAxis-1"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "failed-auth-by-source",
+      "type": "visualization",
+      "title": "Failed Authentication by Source IP",
+      "gridData": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "panelIndex": "2",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "pie",
+            "addTooltip": true,
+            "addLegend": true,
+            "legendPosition": "right",
+            "isDonut": false
+          }
+        },
+        "query": "rule.id:(60122 OR 5503 OR 5551)"
+      }
+    },
+    {
+      "id": "privilege-escalation-alerts",
+      "type": "visualization",
+      "title": "Privilege Escalation Attempts",
+      "gridData": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "panelIndex": "3",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "table",
+            "perPage": 10,
+            "showPartialRows": false,
+            "showMetricsAtAllLevels": false,
+            "sort": {
+              "columnIndex": null,
+              "direction": null
+            },
+            "showTotal": false,
+            "totalFunc": "sum"
+          }
+        },
+        "query": "rule.id:100020 OR rule.id:100021"
+      }
+    },
+    {
+      "id": "dns-query-volume",
+      "type": "visualization",
+      "title": "DNS Query Volume (Tunneling Detection)",
+      "gridData": {
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 8
+      },
+      "panelIndex": "4",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "area",
+            "addTooltip": true,
+            "addLegend": true,
+            "legendPosition": "right",
+            "times": []
+          }
+        },
+        "query": "rule.id:(100030 OR 100031 OR 100032)"
+      }
+    },
+    {
+      "id": "top-mitre-tactics",
+      "type": "visualization",
+      "title": "Top MITRE ATT&CK Tactics Detected",
+      "gridData": {
+        "x": 16,
+        "y": 16,
+        "w": 8,
+        "h": 8
+      },
+      "panelIndex": "5",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "metric",
+            "addTooltip": true,
+            "addLegend": false,
+            "metric": {
+              "percentageMode": false,
+              "useRanges": false,
+              "colorSchema": "Green to Red",
+              "metricColorMode": "None",
+              "colorsRange": [
+                {
+                  "from": 0,
+                  "to": 10000
+                }
+              ],
+              "labels": {
+                "show": true
+              },
+              "invertColors": false,
+              "style": {
+                "bgFill": "#000",
+                "bgColor": false,
+                "labelColor": false,
+                "subText": "",
+                "fontSize": 60
+              }
+            }
+          }
+        },
+        "aggs": [
+          {
+            "id": "1",
+            "enabled": true,
+            "type": "count",
+            "schema": "metric"
+          },
+          {
+            "id": "2",
+            "enabled": true,
+            "type": "terms",
+            "schema": "group",
+            "params": {
+              "field": "rule.mitre.id",
+              "size": 10,
+              "order": "desc",
+              "orderBy": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "alert-severity-distribution",
+      "type": "visualization",
+      "title": "Alert Severity Distribution",
+      "gridData": {
+        "x": 0,
+        "y": 24,
+        "w": 8,
+        "h": 6
+      },
+      "panelIndex": "6",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "pie",
+            "addTooltip": true,
+            "addLegend": true,
+            "legendPosition": "right",
+            "isDonut": true
+          }
+        },
+        "aggs": [
+          {
+            "id": "1",
+            "enabled": true,
+            "type": "count",
+            "schema": "metric"
+          },
+          {
+            "id": "2",
+            "enabled": true,
+            "type": "range",
+            "schema": "segment",
+            "params": {
+              "field": "rule.level",
+              "ranges": [
+                {"from": 0, "to": 5, "label": "Low"},
+                {"from": 5, "to": 10, "label": "Medium"},
+                {"from": 10, "to": 13, "label": "High"},
+                {"from": 13, "to": 16, "label": "Critical"}
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "powershell-activity",
+      "type": "visualization",
+      "title": "Suspicious PowerShell Activity",
+      "gridData": {
+        "x": 8,
+        "y": 24,
+        "w": 16,
+        "h": 6
+      },
+      "panelIndex": "7",
+      "embeddableConfig": {
+        "vis": {
+          "params": {
+            "type": "table",
+            "perPage": 5,
+            "showPartialRows": false,
+            "showMetricsAtAllLevels": false
+          }
+        },
+        "query": "rule.id:(100040 OR 100041) OR data.win.eventdata.commandLine:*",
+        "columns": [
+          "timestamp",
+          "agent.name",
+          "rule.description",
+          "data.win.eventdata.commandLine"
+        ]
+      }
+    }
+  ],
+  "timeRestore": false,
+  "timeTo": "now",
+  "timeFrom": "now-24h",
+  "refreshInterval": {
+    "pause": false,
+    "value": 30000
+  },
+  "options": {
+    "darkTheme": false,
+    "hidePanelTitles": false,
+    "useMargins": true
+  }
+}

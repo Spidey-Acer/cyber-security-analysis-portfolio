@@ -1,0 +1,142 @@
+<!-- Custom Wazuh Rules for Attack Detection -->
+<!-- Student ID: US17502 -->
+<!-- Activity 3: SIEM-Based Attack Simulation -->
+
+<group name="custom_attacks,">
+
+  <!-- Rule 100010: RDP Brute Force Detection -->
+  <rule id="100010" level="10">
+    <if_sid>60122</if_sid>
+    <same_source_ip />
+    <description>Possible RDP brute force attack - Multiple authentication failures</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+    <frequency>10</frequency>
+    <timeframe>300</timeframe>
+  </rule>
+
+  <rule id="100011" level="12">
+    <if_sid>100010</if_sid>
+    <if_matched_sid>60103</if_matched_sid>
+    <same_source_ip />
+    <description>RDP brute force attack succeeded - Authentication after multiple failures</description>
+    <group>authentication_success,pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+  </rule>
+
+  <!-- Rule 100020: Privilege Escalation Detection -->
+  <rule id="100020" level="12">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.parentIntegrityLevel">^Medium$</field>
+    <field name="win.eventdata.integrityLevel">^System$</field>
+    <description>Suspicious privilege escalation - Medium to System integrity level</description>
+    <mitre>
+      <id>T1134</id>
+    </mitre>
+    <group>privilege_escalation,gdpr_IV_35.7.d,</group>
+  </rule>
+
+  <rule id="100021" level="10">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image">\\rundll32.exe$|\\regsvr32.exe$|\\mshta.exe$</field>
+    <field name="win.eventdata.commandLine">token|impersonate</field>
+    <description>Possible token manipulation detected - Suspicious process behavior</description>
+    <mitre>
+      <id>T1134.001</id>
+    </mitre>
+    <group>privilege_escalation,</group>
+  </rule>
+
+  <!-- Rule 100030: DNS Tunneling Detection -->
+  <rule id="100030" level="8">
+    <decoded_as>json</decoded_as>
+    <field name="dns.qtype">^TXT$|^NULL$</field>
+    <description>Possible DNS tunneling - Excessive TXT or NULL queries</description>
+    <frequency>50</frequency>
+    <timeframe>60</timeframe>
+    <mitre>
+      <id>T1071.004</id>
+    </mitre>
+    <group>dns,data_exfiltration,pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+  </rule>
+
+  <rule id="100031" level="10">
+    <if_sid>100030</if_sid>
+    <field name="dns.qdomain">\.{10,}</field>
+    <description>DNS tunneling - Long subdomain detected (likely encoded data)</description>
+    <mitre>
+      <id>T1071.004</id>
+      <id>T1048.003</id>
+    </mitre>
+    <group>dns,data_exfiltration,</group>
+  </rule>
+
+  <rule id="100032" level="12">
+    <if_sid>100030</if_sid>
+    <field name="dns.qtype">^TXT$</field>
+    <field name="dns.rlength">\d{200,}</field>
+    <description>High-confidence DNS exfiltration - Large TXT record responses</description>
+    <mitre>
+      <id>T1071.004</id>
+      <id>T1041</id>
+    </mitre>
+    <group>dns,data_exfiltration,</group>
+  </rule>
+
+  <!-- Rule 100040: Suspicious PowerShell Activity -->
+  <rule id="100040" level="9">
+    <if_sid>91801</if_sid>
+    <field name="win.eventdata.scriptBlockText">DownloadString|Invoke-Expression|IEX|Net.WebClient</field>
+    <description>Suspicious PowerShell command - Possible download cradle</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1105</id>
+    </mitre>
+    <group>powershell,command_execution,</group>
+  </rule>
+
+  <rule id="100041" level="11">
+    <if_sid>91801</if_sid>
+    <field name="win.eventdata.scriptBlockText">-encodedcommand|-enc|-w hidden</field>
+    <description>Obfuscated PowerShell execution - Encoded command detected</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1027</id>
+    </mitre>
+    <group>powershell,obfuscation,</group>
+  </rule>
+
+  <!-- Rule 100050: Lateral Movement Detection -->
+  <rule id="100050" level="10">
+    <if_sid>60103</if_sid>
+    <field name="win.system.eventID">^4624$</field>
+    <field name="win.eventdata.logonType">^3$</field>
+    <description>Network logon detected - Possible lateral movement</description>
+    <frequency>5</frequency>
+    <timeframe>300</timeframe>
+    <mitre>
+      <id>T1021</id>
+    </mitre>
+    <group>lateral_movement,</group>
+  </rule>
+
+  <!-- Rule 100060: Mimikatz Detection -->
+  <rule id="100060" level="15">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image">mimikatz\.exe$</field>
+    <description>Mimikatz credential dumping tool detected</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+    <group>credential_access,</group>
+  </rule>
+
+  <rule id="100061" level="13">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.commandLine">sekurlsa::logonpasswords|lsadump::</field>
+    <description>Credential dumping command detected - Mimikatz-like behavior</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+    <group>credential_access,</group>
+  </rule>
+
+</group>
